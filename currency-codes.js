@@ -1,4 +1,4 @@
-count currencies = [
+currencies = [
   "AED",
   "AFN",
   "ALL",
