@@ -1,4 +1,4 @@
-let url = https://v6.exchangerate-api.com/v6/763041fd24d3326a958a1e96/latest/USD;
+let url = "https://v6.exchangerate-api.com/v6/763041fd24d3326a958a1e96/latest/USD";
 const fromDropDown = document.getElementById("from-currency-select");
 const toDropDown = document.getElementById("to-currency-select");
 
@@ -49,6 +49,7 @@ document
   .querySelector("#convert-button")
   .addEventListener("click", convertCurrency);
 window.addEventListener("load", convertCurrency);
+
 
 
 
