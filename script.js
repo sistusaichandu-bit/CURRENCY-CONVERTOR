@@ -1,4 +1,4 @@
-let api = https://api.exchangerate.host/latest?base=USD;
+let url = https://api.exchangerate.host/convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount};
 const fromDropDown = document.getElementById("from-currency-select");
 const toDropDown = document.getElementById("to-currency-select");
 
@@ -49,4 +49,5 @@ document
   .querySelector("#convert-button")
   .addEventListener("click", convertCurrency);
 window.addEventListener("load", convertCurrency);
+
 
