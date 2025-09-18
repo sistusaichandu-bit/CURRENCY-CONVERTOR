@@ -1,9 +1,10 @@
-let url = "https://v6.exchangerate-api.com/v6/763041fd24d3326a958a1e96/latest/USD";
+
+
+let api = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
 const fromDropDown = document.getElementById("from-currency-select");
 const toDropDown = document.getElementById("to-currency-select");
-const result = document.getElementById("result");
 
-// Populate 'from' dropdown
+//Create dropdown from the currencies array
 currencies.forEach((currency) => {
   const option = document.createElement("option");
   option.value = currency;
@@ -11,7 +12,7 @@ currencies.forEach((currency) => {
   fromDropDown.add(option);
 });
 
-// Populate 'to' dropdown
+//Repeat same thing for the other dropdown
 currencies.forEach((currency) => {
   const option = document.createElement("option");
   option.value = currency;
@@ -19,30 +20,27 @@ currencies.forEach((currency) => {
   toDropDown.add(option);
 });
 
-// Default selections
+//Setting default values
 fromDropDown.value = "USD";
 toDropDown.value = "INR";
 
 let convertCurrency = () => {
+  //Create References
   const amount = document.querySelector("#amount").value;
   const fromCurrency = fromDropDown.value;
   const toCurrency = toDropDown.value;
 
-  if (amount.length !== 0) {
-    // Get exchange rates for selected base
-    fetch(`https://v6.exchangerate-api.com/v6/763041fd24d3326a958a1e96/latest/${fromCurrency}`)
+  //If amount input field is not empty
+  if (amount.length != 0) {
+    fetch(api)
       .then((resp) => resp.json())
       .then((data) => {
-        if (!data.conversion_rates || !data.conversion_rates[toCurrency]) {
-          result.innerHTML = "Currency not supported.";
-          return;
-        }
+        let fromExchangeRate = data.conversion_rates[fromCurrency];
         let toExchangeRate = data.conversion_rates[toCurrency];
-        const convertedAmount = amount * toExchangeRate;
-        result.innerHTML = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`;
-      })
-      .catch(() => {
-        result.innerHTML = "Error fetching exchange rates.";
+        const convertedAmount = (amount / fromExchangeRate) * toExchangeRate;
+        result.innerHTML = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(
+          2
+        )} ${toCurrency}`;
       });
   } else {
     alert("Please fill in the amount");
@@ -53,8 +51,4 @@ document
   .querySelector("#convert-button")
   .addEventListener("click", convertCurrency);
 window.addEventListener("load", convertCurrency);
-
-
-
-
 
